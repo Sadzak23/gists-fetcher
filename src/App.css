@@ -23,3 +23,6 @@ header h2 {
   align-items: center;
   justify-content: center;
 }
+.flex-grow {
+  flex-grow: 1;
+}

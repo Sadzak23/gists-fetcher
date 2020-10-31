@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 import { Gist } from "./components/Gist";
+import { Loading } from "./components/Loading";
 import { Pagination } from "./components/Pagination";
 
 interface GistType {
@@ -20,14 +21,18 @@ const App = () => {
   const [pageNo, setPageNo] = useState(1);
   const [gists, setGists] = useState<GistType[]>([]);
   const [activeGistId, setActiveGistId] = useState<string>();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getGists = async () => {
+      setIsLoading(true);
+      // setGists([]);
       try {
         const response = await axios.get(
           `https://api.github.com/gists/public?per_page=30&page=${pageNo}`
         );
         await setGists(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error.message);
       }
@@ -45,15 +50,19 @@ const App = () => {
         <h2>Gists</h2>
       </header>
       <div className="app-content">
-        {gists.map((gist) => (
-          <Gist
-            key={gist.id}
-            avatarUrl={gist.owner.avatar_url}
-            fileName={Object.keys(gist.files)[0]}
-            onGistClick={() => onGistClick(gist.id)}
-            isActive={gist.id === activeGistId}
-          />
-        ))}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          gists.map((gist) => (
+            <Gist
+              key={gist.id}
+              avatarUrl={gist.owner.avatar_url}
+              fileName={Object.keys(gist.files)[0]}
+              onGistClick={() => onGistClick(gist.id)}
+              isActive={gist.id === activeGistId}
+            />
+          ))
+        )}
         <Pagination pageNo={pageNo} setPageNo={setPageNo} />
       </div>
     </div>
