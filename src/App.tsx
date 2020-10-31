@@ -26,7 +26,6 @@ const App = () => {
   useEffect(() => {
     const getGists = async () => {
       setIsLoading(true);
-      // setGists([]);
       try {
         const response = await axios.get(
           `https://api.github.com/gists/public?per_page=30&page=${pageNo}`
@@ -37,6 +36,9 @@ const App = () => {
         console.log(error.message);
       }
     };
+    // Scroll to top
+    window.scrollTo(0, 0);
+    // Fetch Gists
     getGists();
   }, [pageNo]);
 
