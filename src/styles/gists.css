@@ -1,0 +1,19 @@
+.gist-container {
+  display: flex;  
+  align-items: center;
+  border-bottom: 1px solid #aaa;
+  cursor: pointer;
+}
+.gist-avatar {
+  height: 70px;
+  width: 70px;
+  border-radius: 25px;
+  padding: 10px;
+}
+.gist-active {
+  background: #eeeeee;
+  color: #409bf1;  
+}
+.gist-active img {
+  filter: brightness(50%); 
+}
