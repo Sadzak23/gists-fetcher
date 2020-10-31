@@ -12,6 +12,10 @@
   color: #fff;
   height: 55px;
 }
+.error-msg {
+  text-align: center;
+  font-size: 20px;  
+}
 
 header h2 {
   padding: 10px 30px;

@@ -22,28 +22,47 @@ const App = () => {
   const [gists, setGists] = useState<GistType[]>([]);
   const [activeGistId, setActiveGistId] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
+  
   useEffect(() => {
+    const url = `https://api.github.com/gists/public?per_page=30&page=${pageNo}`;
     const getGists = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(
-          `https://api.github.com/gists/public?per_page=30&page=${pageNo}`
-        );
+        const response = await axios.get(url);
         await setGists(response.data);
-        setIsLoading(false);
       } catch (error) {
-        console.log(error.message);
+        setError(error.message);
+      } finally {        
+        window.scrollTo(0, 0);    // Scroll to top
+        setIsLoading(false);
       }
     };
-    // Scroll to top
-    window.scrollTo(0, 0);
-    // Fetch Gists
-    getGists();
+    getGists();   // Fetch Gists
   }, [pageNo]);
 
   const onGistClick = (id: string) => {
     setActiveGistId(id);
+  };
+
+  const Content = () => {
+    if (error) {
+      return <p className="error-msg">Error: {error}</p>
+    }
+    else if (isLoading) {
+      return <Loading />
+    } else {
+      return gists.map((gist) => (
+        <Gist
+          key={gist.id}
+          avatarUrl={gist.owner.avatar_url}
+          fileName={Object.keys(gist.files)[0]}
+          onGistClick={() => onGistClick(gist.id)}
+          isActive={gist.id === activeGistId}
+        />
+      ))
+    }
   };
 
   return (
@@ -52,20 +71,8 @@ const App = () => {
         <h2>Gists</h2>
       </header>
       <div className="app-content">
-        {isLoading ? (
-          <Loading />
-        ) : (
-          gists.map((gist) => (
-            <Gist
-              key={gist.id}
-              avatarUrl={gist.owner.avatar_url}
-              fileName={Object.keys(gist.files)[0]}
-              onGistClick={() => onGistClick(gist.id)}
-              isActive={gist.id === activeGistId}
-            />
-          ))
-        )}
-        <Pagination pageNo={pageNo} setPageNo={setPageNo} />
+        {Content()}
+        {!error && <Pagination pageNo={pageNo} setPageNo={setPageNo} />}
       </div>
     </div>
   );
