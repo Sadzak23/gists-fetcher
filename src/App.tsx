@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 import { Gist } from "./components/Gist";
+import { Pagination } from "./components/Pagination";
 
 interface GistType {
   owner: {
@@ -45,14 +46,15 @@ const App = () => {
       </header>
       <div className="app-content">
         {gists.map((gist) => (
-            <Gist
-              key={gist.id}
-              avatarUrl={gist.owner.avatar_url}
-              fileName={Object.keys(gist.files)[0]}
-              onGistClick={() => onGistClick(gist.id)}
-              isActive={gist.id === activeGistId}
-            />
-          ))}
+          <Gist
+            key={gist.id}
+            avatarUrl={gist.owner.avatar_url}
+            fileName={Object.keys(gist.files)[0]}
+            onGistClick={() => onGistClick(gist.id)}
+            isActive={gist.id === activeGistId}
+          />
+        ))}
+        <Pagination pageNo={pageNo} setPageNo={setPageNo} />
       </div>
     </div>
   );

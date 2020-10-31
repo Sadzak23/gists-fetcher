@@ -1,0 +1,8 @@
+.button-pagination {
+  font-weight: bold;
+  width: 40px;
+}
+.page-number {
+  padding: 0 20px;
+  font-weight: bold;
+}
