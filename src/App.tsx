@@ -65,17 +65,28 @@ const App = () => {
       return <p className="error-msg">Error: {error}</p>;
     }
     if (isLoading) {
-      return <Loading />;
+      return (
+        <React.Fragment>
+          <Loading />
+          <Pagination pageNo={pageNo} setPageNo={setPageNo} />
+          {/* Remove the line above if no pagination is needed while loading */}
+        </React.Fragment>
+      );
     }
-    return gists.map((gist) => (
-      <Gist
-        key={gist.id}
-        avatarUrl={gist.owner.avatar_url}
-        fileName={Object.keys(gist.files)[0]}
-        onGistClick={() => onGistClick(gist.id, gist.owner.avatar_url)}
-        isActive={gist.id === activeGist?.id}
-      />
-    ));
+    return (
+      <React.Fragment>
+        {gists.map((gist) => (
+          <Gist
+            key={gist.id}
+            avatarUrl={gist.owner.avatar_url}
+            fileName={Object.keys(gist.files)[0]}
+            onGistClick={() => onGistClick(gist.id, gist.owner.avatar_url)}
+            isActive={gist.id === activeGist?.id}
+          />
+        ))}
+        <Pagination pageNo={pageNo} setPageNo={setPageNo} />
+      </React.Fragment>
+    );
   };
 
   return (
@@ -83,10 +94,7 @@ const App = () => {
       <header className="app-header">
         <h2>Gists</h2>
       </header>
-      <div className="app-content">
-        {Content()}
-        {!error && <Pagination pageNo={pageNo} setPageNo={setPageNo} />}
-      </div>
+      <div className="app-content">{Content()}</div>
       {!!activeGist && (
         <Modal modalRef={modalRef} avatarUrl={activeGist?.avatarUrl} />
       )}
