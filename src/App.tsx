@@ -38,7 +38,8 @@ const App = () => {
   // Show modal on gist click
   useEffect(() => {
     modalRef.current?.classList.add("modal-visible");
-    setTimeout(() => modalRef.current?.classList.remove("modal-visible"), 1000);
+    setTimeout(() => modalRef.current?.classList.remove("modal-visible"), 1000); 
+    // If it should stay visible for 1s than the value would be 1600 (1s + 0.3s for each transition)
   }, [activeGist, modalRef]);
 
   const onGistClick = (id: string, avatarUrl: string) => {
