@@ -5,22 +5,7 @@ import { Gist } from "./components/Gist";
 import { Loading } from "./components/Loading";
 import { Pagination } from "./components/Pagination";
 import { Modal } from "./components/Modal";
-
-interface GistType {
-  owner: {
-    avatar_url: string;
-  };
-  id: string;
-  files: {
-    [key: string]: {
-      filename: string;
-    };
-  };
-}
-interface ActiveGist {
-  id: string;
-  avatarUrl: string;
-}
+import { ActiveGist, GistType } from "./models/Gist-models";
 
 const App = () => {
   const [pageNo, setPageNo] = useState(1);
