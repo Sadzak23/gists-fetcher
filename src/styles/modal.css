@@ -1,0 +1,26 @@
+.modal-container {
+  position: fixed;
+  top: 50%;
+  bottom: 50%;
+  left: 30%;
+  right: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-img {
+  height: 300px;
+  width: 300px;
+  border-radius: 40px;
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.5);
+}
+.modal-visible {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: opacity 0.3s linear !important;
+}
+.modal-hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.3s, opacity 0.3s linear;
+}

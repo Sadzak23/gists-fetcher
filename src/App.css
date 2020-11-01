@@ -1,5 +1,6 @@
 @import './styles/pagination';
 @import './styles/gists';
+@import './styles/modal.css';
 
 .app-content {
   display: flex;
