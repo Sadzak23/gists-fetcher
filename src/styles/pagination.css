@@ -1,8 +1,29 @@
 .button-pagination {
-  font-weight: bold;
-  width: 40px;
+  background: none;
+  border: 1px solid #999;
+  border-radius: 4px;
+  height: 25px;
+  width: 25px;
+  margin-left: 5px;
+}
+.button-pagination:disabled {
+  color: #ddd;
+  border-color: #ddd;
+}
+.button-pagination:focus {
+  outline: none;
 }
 .page-number {
-  padding: 0 20px;
-  font-weight: bold;
+  padding: 3px;
+  border: 0;
+  background: none;
+}
+.page-number:disabled {
+  color: #000;
+}
+.page-number:focus {
+  outline: none;
+}
+.pagination {  
+  color: #80daff;  
 }

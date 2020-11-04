@@ -6,9 +6,11 @@ import { Loading } from "./components/Loading";
 import { Pagination } from "./components/Pagination";
 import { Modal } from "./components/Modal";
 import { ActiveGist, GistType } from "./models/Gist-models";
+import { getLastPageNo } from "./functions/GetLastPage";
 
 const App = () => {
   const [pageNo, setPageNo] = useState(1);
+  const [lastPageNo, setLastPageNo] = useState<number>()
   const [gists, setGists] = useState<GistType[]>([]);
   const [activeGist, setActiveGist] = useState<ActiveGist>();
   const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +26,7 @@ const App = () => {
       setActiveGist(undefined);
       try {
         const response = await axios.get(url);
+        setLastPageNo(getLastPageNo(response.headers.link, pageNo));
         setGists(response.data);
         window.scrollTo(0, 0); // Scroll to top
       } catch (error) {
@@ -54,7 +57,7 @@ const App = () => {
       return (
         <React.Fragment>
           <Loading />
-          <Pagination pageNo={pageNo} setPageNo={setPageNo} />
+          {lastPageNo && <Pagination pageNo={pageNo} setPageNo={setPageNo} totalPages={lastPageNo} />}
           {/* Remove the line above if no pagination is needed while loading */}
         </React.Fragment>
       );
@@ -63,14 +66,14 @@ const App = () => {
       <React.Fragment>
         {gists.map((gist) => (
           <Gist
-            key={gist.id}
-            avatarUrl={gist.owner.avatar_url}
-            fileName={Object.keys(gist.files)[0]}
-            onGistClick={() => onGistClick(gist.id, gist.owner.avatar_url)}
-            isActive={gist.id === activeGist?.id}
+          key={gist.id}
+          avatarUrl={gist.owner.avatar_url}
+          fileName={Object.keys(gist.files)[0]}
+          onGistClick={() => onGistClick(gist.id, gist.owner.avatar_url)}
+          isActive={gist.id === activeGist?.id}
           />
-        ))}
-        <Pagination pageNo={pageNo} setPageNo={setPageNo} />
+          ))}
+          {lastPageNo && <Pagination pageNo={pageNo} setPageNo={setPageNo} totalPages={lastPageNo} />}
       </React.Fragment>
     );
   };
