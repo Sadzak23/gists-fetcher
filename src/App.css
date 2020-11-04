@@ -5,21 +5,23 @@
 .app-content {
   display: flex;
   flex-direction: column;
-  padding: 0 40px;
-  min-height: calc(100vh - 55px);
+  padding: 0 20px;
+  min-height: calc(100vh - 30px);
 }
 .app-header {
-  background-color: #319ac9;
-  color: #fff;
-  height: 55px;
+  display: flex;
+  align-items: center;
+  background-color: #eee;
+  height: 30px;
 }
 .error-msg {
   text-align: center;
   font-size: 20px;  
 }
 
-header h2 {
-  padding: 10px 30px;
+header p {
+  font-weight: bold;
+  padding: 10px 20px;
   margin: 0;
 }
 
@@ -27,6 +29,11 @@ header h2 {
   display: flex;  
   align-items: center;
   justify-content: center;
+}
+.flex-right {
+  display: flex;  
+  align-items: center;
+  justify-content: flex-end;
 }
 .flex-grow {
   flex-grow: 1;

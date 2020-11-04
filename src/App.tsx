@@ -81,7 +81,7 @@ const App = () => {
   return (
     <React.Fragment>
       <header className="app-header">
-        <h2>Gists</h2>
+        <p>Gists</p>
       </header>
       <div className="app-content">{Content()}</div>
       {!!activeGist && (
